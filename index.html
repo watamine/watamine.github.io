@@ -2,11 +2,46 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>渡邊峰</title>
+<title>タイトル</title>
 <meta name="keywords" content="ページのキーワードA,B,C">
 <meta name="description" content="ページの説明">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="style.css">
+<style>
+  /* サイドバーの基本スタイル */
+  aside {
+    width: 200px;
+    position: fixed; /* 固定表示 */
+    top: 0;
+    left: 0;
+    height: 100%; /* 縦全体をカバー */
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  /* コンテンツの余白調整 */
+  #content {
+    margin-left: 220px; /* サイドバーの幅に合わせて調整 */
+    padding: 20px;
+  }
+  /* サイドバーメニューのスタイル */
+  .link ul {
+    list-style: none;
+    padding: 0;
+  }
+  .link ul li {
+    margin: 10px 0;
+  }
+  .link ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  .link ul li a:hover {
+    color: #007BFF; /* ホバー時の色 */
+  }
+</style>
+
+
 </head>
 <body>
 <div id="outer">
