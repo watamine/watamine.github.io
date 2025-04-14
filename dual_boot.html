@@ -14,6 +14,17 @@
         <div id="header-container"><div id="head-inner"><h1>あなたのＨＰタイトル</h1>
           <p class="description">あなたのＨＰの説明文</p></div></div>
       </header>
+      <aside>
+        <div class="left-title">メニュー</div>
+        <div class="link">
+          <ul>
+            <li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
+            <li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
+            <li><a href="#section3">サーバーを構築してみた</a></li>
+          </ul>
+        </div>
+      </aside>
+
       <div id="content-wrapper">
         <main>
           <div id="inner">
@@ -39,11 +50,63 @@
               <br>ここを乗り越えればインストール完了。Microsoftの初期設定に進む。</p>
             <h2>起動優先順位と選択画面の設定</h2>
             <p>UbuntuのインストールされたSSDを取り付ければ、これでWindows11とUbuntuのデュアルブート環境が構築される。（このあと確認）
-              <br>しかし、このまま電源を入れても、おそらくWindowsかUbuntuどちらかが起動して選択することができない。そこで、起動時に一定時間起動するOSを選択する画面を出力するように設定し、一定時間の間どちらも選択しなければ、より優先度の高い方を起動するようにする。今回はUbuntuを優先度の高いOSとして設定する。</p>
+              <br>しかし、このまま電源を入れても、おそらくWindowsかUbuntuどちらかが起動して選択することができない。そこで、起動時に一定時間起動するOSを選択する画面を出力するように設定し、一定時間の間どちらも選択しなければ、より優先度の高い方を起動するようにする。今回はUbuntuを優先度の高いOSとして設定する。
             <h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
             <p>PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）BIOS画面を呼び出す。画面の構成はマザーボードによって異なる</p>
-            <p>まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認</p>
-            <code>Settings\System Status</code>
+            
+            <p>まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認
+            <br>Settings\System Status のところ</p>
+            
+            <p>M2_1,M2_2のところ。しっかり認識されているので問題なし
+            <br>次に、2枚のSSDの起動優先順位を設定
+            <br>Settings\Boot\UEFI Hard Disk Drive BBS Priorities のところ</p>
+            
+            <p>Option #1が優先順位高い方。今回はUbuntuを#1にセットする。
+              <br>Save & Exitで再起動
+              <br>これで、Ubuntuが優先的に起動するようになった。</p>
+            <h3>起動時に一定時間選択画面を出力する</h3>
+            <p>優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。</p>
+            <code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
+            <p>OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
+            <br>どちらか片方しかない場合→トラブルシューティングへ</p>
+
+            <p>次に、</p>
+            <code>sudo nano /etc/default/grub</code>
+            <p>このファイルで起動時の設定を行う
+            <br>私の場合、デフォルトではこんな感じでした↓</p>
+
+            <p>これをこのように書き換える</p>
+
+            <code>GRUB_DEFAULT=0 #デフォルトで起動するOSを選択。この0,1,2...は、先程のコマンドの出力の上から順に対応している
+            <br>GRUB_TIMEOUT_STYLE=menu #起動時にOS選択画面を出力する
+            <br>GRUB_TIMEOUT=10 #選択画面の表示時間を10病に設定</code>
+            <code>sudo update-grub # 設定を反映
+            <br>sudo reboot #再起動</code>
+            <p>うまくいけば下のような画面が出力されるはず</p>
+            <h3>トラブルシューティング</h3>
+            <code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
+            <p>を実行しても2つのOSが表示されない</p>
+
+            <p>この例では、GRUBがWindowsを認識しておらず、出力されない。</p>
+            <code>Sudo apt install os-prober
+            <br>sudo nano /etc/default/grub</code>
+            <p>をもう一度開き、</p>
+            <code>GRUB_DEFAULT_OS_PROBER=false</code>
+            <p>を追加</p>
+            <code>sudo update-grub</code>
+            <p>でもう一度設定を反映させる</p>
+
+            <p>Found windows Boot Manager...でよさげになった
+            <br>最後に動作確認のため、もう一回再起動する</p>
+
+            <p>選択画面が表示された！</p>
+
+            <h3>参考記事</h3>
+            https://www.youtube.com/watch?v=sGDH5hS3uAY
+            <br>chatGPT
+            
+            
+            
             
           </div>
         </main>
