@@ -103,8 +103,9 @@ p.custom3 {
             <p >PCの電源を落とし、UbuntuのインストールされたSSDを抜き、Windowsをインストール予定のSSDを取り付ける。
               <br>PCの電源を落とした状態から、ISOの入ったUSBを繋げて起動する。
               <br>基本的には指示にしたがって進めればOK（画像なくてごめんなさい）言語、エディション、キーボード設定など。
-              <br>ネットワーク接続のとき、有線接続しているのに認識されなかったけど、抜き差ししたら解決した。
-              <br>画像挿入。認識されない場合は、LANドライバーを別のパソコンからインストールする必要があるらしい。面倒くさそう
+              <br>ネットワーク接続のとき、有線接続しているのに認識されなかったけど、抜き差ししたら解決した。</p>
+		  <imag src="images/dual.LAT.png">
+              <p>画像挿入。認識されない場合は、LANドライバーを別のパソコンからインストールする必要があるらしい。面倒くさそう
               <br>ここを乗り越えればインストール完了。Microsoftの初期設定に進む。</p>
             <h2>2-起動優先順位と選択画面の設定</h2>
             <p>UbuntuのインストールされたSSDを取り付ければ、これでWindows11とUbuntuのデュアルブート環境が構築される。（このあと確認）
@@ -113,21 +114,22 @@ p.custom3 {
               <br>今回はUbuntuを優先度の高いOSとして設定する。
             <h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
             <p>PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）BIOS画面を呼び出す。画面の構成はマザーボードによって異なる</p>
-            <img src="images/dual_bios.png">
-            
+			  <img src="images/dual_bios.png">
             <p>まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認
             <br>Settings\System Status のところ</p>
-            
+			  <img src="images/dual_ssd.png">
             <p>M2_1,M2_2のところ。しっかり認識されているので問題なし
             <br>次に、2枚のSSDの起動優先順位を設定
             <br>Settings\Boot\UEFI Hard Disk Drive BBS Priorities のところ</p>
-            
+			  <img src="images/dual_priority.png">
             <p>Option #1が優先順位高い方。今回はUbuntuを#1にセットする。
               <br>Save & Exitで再起動
               <br>これで、Ubuntuが優先的に起動するようになった。</p>
+			  
             <h3>起動時に一定時間選択画面を出力する</h3>
             <p>優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。</p>
             <code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
+			  <img src="images/dual_grub.png">
             <p>OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
             <br>どちらか片方しかない場合→トラブルシューティングへ</p>
 
@@ -135,8 +137,9 @@ p.custom3 {
             <code>sudo nano /etc/default/grub</code>
             <p>このファイルで起動時の設定を行う
             <br>私の場合、デフォルトではこんな感じでした↓</p>
-
+			  <img src="images/dual_grubfile.png">
             <p>これをこのように書き換える</p>
+				  <img src="images/dual_grubfile_2.png">
 
             <code>GRUB_DEFAULT=0 #デフォルトで起動するOSを選択。この0,1,2...は、先程のコマンドの出力の上から順に対応している
             <br>GRUB_TIMEOUT_STYLE=menu #起動時にOS選択画面を出力する
@@ -144,10 +147,11 @@ p.custom3 {
             <code>sudo update-grub # 設定を反映
             <br>sudo reboot #再起動</code>
             <p>うまくいけば下のような画面が出力されるはず</p>
+			  <img src="images/dual_select.png">
             <h3>トラブルシューティング</h3>
             <code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
             <p>を実行しても2つのOSが表示されない</p>
-
+			  <img src="images/dual_trouble_1.png">
             <p>この例では、GRUBがWindowsを認識しておらず、出力されない。</p>
             <code>Sudo apt install os-prober
             <br>sudo nano /etc/default/grub</code>
@@ -156,12 +160,12 @@ p.custom3 {
             <p>を追加</p>
             <code>sudo update-grub</code>
             <p>でもう一度設定を反映させる</p>
-
+			  <img src="images/dual_trouble_2.png">
             <p>Found windows Boot Manager...でよさげになった
             <br>最後に動作確認のため、もう一回再起動する</p>
 
             <p>選択画面が表示された！</p>
-
+			  <img src="images/dual_select.png">
             <h3>参考記事</h3>
               <p>
               <a href="https://www.youtube.com/watch?v=sGDH5hS3uAY" target="_blank">https://www.youtube.com/watch?v=sGDH5hS3uAY</a>
