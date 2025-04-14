@@ -28,8 +28,7 @@
               </ul>
               <li>それぞれのOSのディスクイメージ (.ISOファイル)。USBメモリに保存しておくのが多分一般的</li>
               <ul>
-                <li>o	Linuxは無料で使えるけど、Windowsは2万ほどかかるhttps://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0<br>東北大学でwindows11のライセンスを取得しているので学生及び教職員は無料で使える。Googleフォームで申請
-https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38</li>
+                <li>o	Linuxは無料で使えるけど、Windowsは2万ほどかかるhttps://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0<br>東北大学でwindows11のライセンスを取得しているので学生及び教職員は無料で使える。Googleフォームで申請 https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38</li>
               </ul>
             </ul>
             <h3>使用したpcスペック</h3>
@@ -39,8 +38,12 @@ https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38<
               <br>画像挿入。認識されない場合は、LANドライバーを別のパソコンからインストールする必要があるらしい。面倒くさそう
               <br>ここを乗り越えればインストール完了。Microsoftの初期設定に進む。</p>
             <h2>起動優先順位と選択画面の設定</h2>
-            <p></p>
-            
+            <p>UbuntuのインストールされたSSDを取り付ければ、これでWindows11とUbuntuのデュアルブート環境が構築される。（このあと確認）
+              <br>しかし、このまま電源を入れても、おそらくWindowsかUbuntuどちらかが起動して選択することができない。そこで、起動時に一定時間起動するOSを選択する画面を出力するように設定し、一定時間の間どちらも選択しなければ、より優先度の高い方を起動するようにする。今回はUbuntuを優先度の高いOSとして設定する。</p>
+            <h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
+            <p>PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）BIOS画面を呼び出す。画面の構成はマザーボードによって異なる</p>
+            <p>まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認</p>
+            <code>Settings\System Status</code>
             
           </div>
         </main>
