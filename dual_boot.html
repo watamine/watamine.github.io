@@ -104,6 +104,7 @@
 						<p>マルチルブート…一台のコンピューターに複数の異なるオペレーティングシステムを導入すること。
 							<br>2つだとデュアルブート、3つだとトリプルブート、4つだとクアトロブート？みたいに続くらしい。
 							<br>今回はUbuntu 22.04とWindows11 Homeの二刀流にする。</p>
+						<br>
 						<h3>必要なもの</h3>
 						<ul>
 							<li>pc</li>
@@ -120,6 +121,7 @@
 									<br>Googleフォームで申請 https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38</li>
 							</ul>
 						</ul>
+						<br>
 						
 						<h3>使用したpcスペック</h3>
 						<a href="pc_enviroment_html">pcのスペックおよび作業環境</a>
@@ -135,6 +137,7 @@
 							認識されない場合は、LANドライバーを別のパソコンからインストールする必要があるらしい。面倒くさそう
 							<br>ここを乗り越えればインストール完了。Microsoftの初期設定に進む。
 						</p>
+						<br>
 							
 						<h2>2. 起動優先順位と選択画面の設定</h2>
 						<p>
@@ -147,11 +150,16 @@
 						<h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
 						<p>PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）BIOS画面を呼び出す。画面の構成はマザーボードによって異なる</p>
 						<img src="images/dual_bios.png">
-						<p>まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認
+						<br>
+						<br>
+						<p>
+							まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認
 							<br>Settings\System Status のところ
 						</p>
 						<img src="images/dual_ssd.jpg">
 						<p>M2_1,M2_2のところ。しっかり認識されているので問題なし
+							<br>
+							<br>
 							<br>次に、2枚のSSDの起動優先順位を設定
 							<br>Settings\Boot\UEFI Hard Disk Drive BBS Priorities のところ
 						</p>
@@ -161,12 +169,16 @@
 							<br>Save & Exitで再起動
 							<br>これで、Ubuntuが優先的に起動するようになった。
 						</p>
+						<br>
 						<h3>起動時に一定時間選択画面を出力する</h3>
 						<p>優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。</p>
+						<br>
 						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
 						<img src="images/dual_grub.png">
 						<p>OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
 							<br>どちらか片方しかない場合→トラブルシューティングへ</p>
+						<br>
+						<br>
 						<p>次に、</p>
 						<code>sudo nano /etc/default/grub</code>
 						<p>
@@ -174,6 +186,7 @@
 							<br>私の場合、デフォルトではこんな感じでした↓
 						</p>
 						<img src="images/dual_grubfile.png">
+						<br>
 						<p>これをこのように書き換える</p>
 						<img src="images/dual_grubfile_2.png">
 						<code>
@@ -181,6 +194,7 @@
 							<br>GRUB_TIMEOUT_STYLE=menu #起動時にOS選択画面を出力する
 							<br>GRUB_TIMEOUT=10 #選択画面の表示時間を10病に設定
 						</code>
+						<br>
 						
 						<code>
 							sudo update-grub # 設定を反映
@@ -188,7 +202,7 @@
 						</code>
 						<p>うまくいけば下のような画面が出力されるはず</p>
 						<img src="images/dual_select.png">
-							
+						<br>
 						<h3>トラブルシューティング</h3>
 						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
 						<p>を実行しても2つのOSが表示されない</p>
