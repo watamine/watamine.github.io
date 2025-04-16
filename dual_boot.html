@@ -50,9 +50,9 @@
       		overflow-x: auto; /* 横スクロールを有効化 */
       		line-height: 1.5; /* 行間を広げる */
 	}
-	br {
-		display: block; /* ブロック要素化 */
-		margin-bottom: 24px; /* 下の余白を20pxに設定 */
+	.spaced-br {
+		display: block; /* ブロック要素に変換 */
+		margin-bottom: 16px; /* 行間を調整 */
 	}
 	.link ul {
 		list-style: none;
@@ -131,10 +131,13 @@
 							<br>
 							<li>それぞれのOSのディスクイメージ (.ISOファイル)。USBメモリに保存しておくのが多分一般的</li>
 							<ul>
-								<li><p>Linuxは無料で使えるけど、Windowsは2万ほどかかる</p>
-									<p>https://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0</p>
-									<br>東北大学でwindows11のライセンスを取得しているので学生及び教職員は無料で使える。
-									<br>Googleフォームで申請 https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38</li>
+								<li>
+									<p>Linuxは無料で使えるけど、Windowsは2万ほどかかる
+									<br class="spaced-br">
+									https://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0
+									<br class="spaced-br">東北大学でwindows11のライセンスを取得しているので学生及び教職員は無料で使える。
+									<br class="spaced-br">Googleフォームで申請 https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38　</p>
+								</li>
 							</ul>
 						</ul>
 						<br>
