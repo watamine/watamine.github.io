@@ -39,6 +39,11 @@
 		display: block;  /* インライン要素を解除 */
 		margin: 0 auto;  /* 中央揃え */
 	}
+	img.big {
+		max-width: 100%; /* 親要素に収まるように制限 */
+		height: auto;    /* アスペクト比を保つ */
+		display: block;  /* インライン要素を解除 */
+		margin: 0 auto;  /* 中央揃え */
 	code, pre {
 		font-size: 16px; /* フォントサイズを16ptに設定 */
 		font-family: Consolas, "Courier New", monospace; /* 等幅フォントを指定 */
@@ -220,7 +225,7 @@
 						<p>優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。</p>
 						<br>
 						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
-						<img src="images/Screenshot from 2025-04-13 21-23-07.png">
+						<img.big src="images/Screenshot from 2025-04-13 21-23-07.png">
 						<p>OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
 							<br>どちらか片方しかない場合→トラブルシューティングへ</p>
 						<br>
@@ -252,7 +257,7 @@
 						<h3>トラブルシューティング</h3>
 						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
 						<p>を実行しても2つのOSが表示されない</p>
-						<img src="images/Screenshot from 2025-04-13 15-19-31.png">
+						<img.big src="images/Screenshot from 2025-04-13 15-19-31.png">
 						<p>この例では、GRUBがWindowsを認識しておらず、出力されない。</p>
 						<code>Sudo apt install os-prober
 							<br>sudo nano /etc/default/grub</code>
