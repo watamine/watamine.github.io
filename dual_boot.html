@@ -239,11 +239,12 @@
 						<img src="images/dual_grubfile.png">
 						<br>
 						<p>これをこのように書き換える</p>
-						<img src="images/dual_grubfile_2.png">
+						<img src="images/Screenshot from 2025-04-19 02-21-25.png">
 						<code>
-							GRUB_DEFAULT=0 #デフォルトで起動するOSを選択。この0,1,2...は、先程のコマンドの出力の上から順に対応している
-							<br>GRUB_TIMEOUT_STYLE=menu #起動時にOS選択画面を出力する
-							<br>GRUB_TIMEOUT=10 #選択画面の表示時間を10病に設定
+							GRUB_DEFAULT=0 #デフォルトで起動するOSを選択。この0,1..は、先程のコマンドの出力の上から順に対応
+							<br>GRUB_TIMEOUT_STYLE=menu #起動時にOS選択画面を出力
+							<br>GRUB_TIMEOUT=10 #選択画面の表示時間を10秒に設定
+							<br>GRUB_HIDDEN_TIMEOUT_QUIET=false  # 10秒のカウントダウンを表示
 						</code>
 						<br>
 						
@@ -257,7 +258,7 @@
 						<h3>トラブルシューティング</h3>
 						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
 						<p>を実行しても2つのOSが表示されない</p>
-						<img.big src="images/Screenshot from 2025-04-13 15-19-31.png">
+						<img.big src="images/Screenshot from 2025-04-19 02-17-05.png">
 						<p>この例では、GRUBがWindowsを認識しておらず、出力されない。</p>
 						<code>Sudo apt install os-prober
 							<br>sudo nano /etc/default/grub</code>
