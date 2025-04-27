@@ -24,11 +24,12 @@
   		padding: 0;
   		font-family: Arial, sans-serif;
   		background-color: #f9f9f9; 
+		line-height: 1.5;
 	}
 	#content {
 		max-width: 750px; 
     		margin: 0 auto; 
-    		padding: 20px;
+    		padding: 30px;
 		background-color: #ffffff;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
   		border-radius: 8px;
@@ -38,6 +39,12 @@
       		height: auto;    /* アスペクト比を保つ */
       		display: block;  /* インライン要素を解除 */
       		margin: 0 auto;  /* 中央揃え */
+	}
+	img.big {
+		max-width: 100%; /* 親要素に収まるように制限 */
+		height: auto;    /* アスペクト比を保つ */
+		display: block;  /* インライン要素を解除 */
+		margin: 0 auto;  /* 中央揃え */
 	}
 	code, pre {
 		font-size: 16px; /* フォントサイズを16ptに設定 */
@@ -133,13 +140,101 @@
 				</div>
 			</aside>
 			<div id="content">
-				main>
+				<main>
 					<div id="inner">
 						<h2>生じた問題</h2>
 						<p>PCを操作していたら固まったので、強制再起動した．
 							<br>ふだん通りUbuntuでユーザーを選択，パスワードを入力した．
 							<br>いつもならここでデスクトプ画面が表示されるが，真っ暗のまま何も表示されない．
 							<br>起動→OS選択→ユーザー選択までは問題なさそうだが，GUI (Graphical User Interface)に関わるどこかで不具合が起きている？
+						</p>
+						<P>
+							この問題を解決するべくとにかくいろいろ試しまくったのその記録です。
+							<br>遠回りをしていそうですが、ついでにGUIやシステム的なところについて色々知ることができたので、このまま残そうと思います。 
+						</P>
+
+						<h3>考えられる原因</h3>
+						<p>
+							おそらくGUIがうまく起動していないor認識されていない 
+							<br>下の図は、Linuxの起動~グラフィック出力の簡易図。
+							<br>今回は起動、ログインはできるけどその先のデスクトップ環境に進めない状態 
+							<br>このフローの何処かに問題があると考えられる
+							図を挟む
+						</p>
+						<h4>仮想コンソールを起動する</h4>
+						<p>
+							Ctrl + alt + F3で仮想コンソールに入る 
+							<br>仮想コンソール…GUIを必要としないプロンプト.起動時だったり、グラボがクラッシュしたあとだったり、画面がうまくつかないときに使える 
+							<br>日本語対応はしていないので◆◆や？？のように文字化けする 
+							図を挟む
+						</p>
+						<p>
+							とりあえずGUIを再起動する 
+							<code>startx</code>
+							これは、X Window Systemと呼ばれる (上図のXサーバーとデスクトップ環境のイメージ)GUIシステムを起動するためのコマンド 
+							<br>しかし直らず 
+						</p>
+
+						<h4>ディスプレイマネージャーについて調べる</h4>
+						<h5>ディスプレイマネージャーがインストールされているかチェック</h5>
+						<P>
+							Ubuntu 22.04の標準ディスプレイマネージャーはgdm3 
+						</P>
+						<code>dpkg -l | grep gdm3 </code>
+						<p>
+							ｄpkgはaptみたいな感じのパッケージ管理ツール 
+							ここでは、“gdm3”を含む、インストール済みのパッケージを確認 
+						</p>
+						<code>Ⅱ gdm3  42.0-1ubuntu7.22.04.4 amd64 GNOME Display Manager</code>
+						<ul>
+							<li>
+								ii → "installed（インストール済み）" 
+								gdm3 → パッケージ名 
+								42.0-1ubuntu7 → バージョン 
+								amd64 → アーキテクチャ（64bit） 
+								GNOME Display Manager → 説明 
+							</li>
+						</ul>
+						<p>
+							Gdmはインストールされている
+							<br>gdmを再起動する
+						</p>
+						<code>
+							sudo systemctl enable gdm3   # 有効化
+							sudo systemctl start gdm3    # gdmの起動
+							sudo reboot                  # システムの再起動
+						</code>
+						<p>
+							直らず
+						</p>
+						<h5>gdm3のエラーログを確認 </h5>
+						<code>jounalctl -xeu gdm       # gdmに関するエラーログを確認 </code>
+
+						<code>GDM: Failed to contact accountsservice </code>
+						<p>GDMがユーザー情報を取得できず起動に失敗している可能性がある </p>
+
+
+						<h6>accountsserviceという，liuxでユーザー管理をするアプリをインストール </h6>
+						<code>
+							dpkg -l | grep accountsservice    
+							<br># "accountsservice"を含むパーッケージがインストールされているか
+						</code>
+						<p>何も出力がなかったので、未インストール状態</p>
+						<code>
+							sudo apt install accountsservice 
+							sudo reboot 
+						</code>
+						<p>直らず</p>
+
+						<h4>ここまでやったこと</h4>
+						<p>
+							システム再起動、X window system再起動
+							<br>デスクトップ環境(gdm) に問題があるかを確認した
+							いずれの手順でも原因はわからなかった。
+						</p>
+						<h4>次回 (後編)</h4>
+						<p>
+							デスクトップ環境やXサーバーを含む、X window systemについて異常があるか確認する
 						</p>
 					</div>
 				
