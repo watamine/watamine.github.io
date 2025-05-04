@@ -24,11 +24,12 @@
   		padding: 0;
   		font-family: Arial, sans-serif;
   		background-color: #f9f9f9; 
+		line-height: 1.5;
 	}
 	#content {
 		max-width: 750px; 
     		margin: 0 auto; 
-    		padding: 20px;
+    		padding: 30px;
 		background-color: #ffffff;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
   		border-radius: 8px;
@@ -38,6 +39,12 @@
       		height: auto;    /* アスペクト比を保つ */
       		display: block;  /* インライン要素を解除 */
       		margin: 0 auto;  /* 中央揃え */
+	}
+	img.big {
+		max-width: 100%; /* 親要素に収まるように制限 */
+		height: auto;    /* アスペクト比を保つ */
+		display: block;  /* インライン要素を解除 */
+		margin: 0 auto;  /* 中央揃え */
 	}
 	code, pre {
 		font-size: 16px; /* フォントサイズを16ptに設定 */
@@ -50,9 +57,30 @@
       		overflow-x: auto; /* 横スクロールを有効化 */
       		line-height: 1.5; /* 行間を広げる */
 	}
+	.spaced-br {
+		display: block; /* ブロック要素に変換 */
+		margin-bottom: 16px; /* 行間を調整 */
+	}
+	.center-text {
+		text-align: center;
+		margin: 20px 0;
+	}
 	br {
 		display: block; /* ブロック要素化 */
 		margin-bottom: 24px; /* 下の余白を20pxに設定 */
+	}
+	ul {
+		padding-left: 20px;
+		margin-bottom: 20px;
+	}
+	ul li {
+		margin-bottom: 15px;
+		line-height: 1.8;
+		font-size: 18px;
+	}
+	ul li br + span {
+		font-size: 16px;
+		color: #555;
 	}
 	.link ul {
 		list-style: none;
@@ -91,6 +119,7 @@
       		color: #666;
 	}
 </style>
+
 
 </head>
 	<body>
