@@ -156,7 +156,7 @@
 							<li>pc</li>
 							<ul>
 								<li>充分な空き容量のSSD
-									<br>それぞれのシステムが干渉して不具合を起こすことがあるらしいのでOSの数だけ (今回は2枚)<br> あると安心</li>
+									<br>それぞれのシステムが干渉して不具合を起こすことがあるらしいのでOSの数だけ (今回は2枚)あると安心</li>
 								<li>できれば有線LANだと楽かも</li>
 							</ul>
 							<br>
@@ -217,8 +217,10 @@
 						</p>
 							
 						<h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
-						<p>PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）
-							<br>BIOS画面を呼び出す。画面の構成はマザーボードによって異なる</p>
+						<p>
+							PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）
+							<br>BIOS画面を呼び出す。画面の構成はマザーボードによって異なる
+						</p>
 						<img src="images/dual_bios.png">
 						<br>
 						<br>
@@ -227,7 +229,8 @@
 							<br>Settings\System Status のところ
 						</p>
 						<img src="images/dual_ssd.jpg">
-						<p>M2_1,M2_2のところ。しっかり認識されているので問題なし
+						<p>
+							M2_1,M2_2のところ。しっかり認識されているので問題なし
 							<br>
 							<br>
 							<br>次に、2枚のSSDの起動優先順位を設定
@@ -243,51 +246,78 @@
 						</p>
 						<br>
 						<h3>起動時に一定時間選択画面を出力する</h3>
-						<p>今回はGRUBと呼ばれる、ブートローダー (ハードディスクからOSを起動するプログラム) を使用する。</p>
-						<p>優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。</p>
+						<p>
+							今回はGRUBと呼ばれる、ブートローダー (ハードディスクからOSを起動するプログラム) を使用する。
+						</p>
+						<p>
+							優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。
+						</p>
 						<br>
-						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
+						<code>
+							sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg
+						</code>
 						<img.big src="images/Screenshot from 2025-04-13 21-23-07.png">
-						<p>OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
-							<br>どちらか片方しかない場合→トラブルシューティングへ</p>
+						<p>
+							OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
+							<br>どちらか片方しかない場合→トラブルシューティングへ
+						</p>
 						<br>
 						<br>
 						<p>次に、</p>
-						<code>sudo nano /etc/default/grub</code>
+						<code>
+							sudo nano /etc/default/grub
+						</code>
 						<p>
 							このファイルで起動時の設定を行う
 							<br>私の場合、デフォルトではこんな感じでした↓
 						</p>
 						<img src="images/dual_grubfile.png">
 						<br>
-						<p>これをこのように書き換える</p>
+						<p>
+							これをこのように書き換える<
+									     /p>
 						<img src="images/Screenshot from 2025-04-19 02-21-25.png">
 						<code>
-							GRUB_DEFAULT=0 #デフォルトで起動するOSを選択。この0,1..は、先程のコマンドの出力の上から順に対応
-							<br>GRUB_TIMEOUT_STYLE=menu #起動時にOS選択画面を出力
-							<br>GRUB_TIMEOUT=10 #選択画面の表示時間を10秒に設定
-							<br>GRUB_HIDDEN_TIMEOUT_QUIET=false  # 10秒のカウントダウンを表示
+							GRUB_DEFAULT=0 
+							<br># デフォルトで起動するOSを選択。この0,1..は、先程のコマンドの出力の上から順に対応
+							<br>GRUB_TIMEOUT_STYLE=menu       # 起動時にOS選択画面を出力
+							<br>GRUB_TIMEOUT=10       # 選択画面の表示時間を10秒に設定
+							<br>GRUB_HIDDEN_TIMEOUT_QUIET=false       # 10秒のカウントダウンを表示
 						</code>
 						<br>
 						
 						<code>
-							sudo update-grub # 設定を反映
-							<br>sudo reboot #再起動
+							sudo update-grub       # 設定を反映
+							<br>sudo reboot       # 再起動
 						</code>
-						<p>うまくいけば下のような画面が出力されるはず</p>
+						<p>
+							うまくいけば下のような画面が出力されるはず
+						</p>
 						<img src="images/dual_select.png">
 						<br>
 						<h3>トラブルシューティング</h3>
-						<code>sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg</code>
-						<p>を実行しても2つのOSが表示されない</p>
+						<code>
+							sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg
+						</code>
+						<p>
+							を実行しても2つのOSが表示されない
+						</p>
 						<img.big src="images/Screenshot from 2025-04-19 02-17-05.png">
-						<p>この例では、GRUBがWindowsを認識しておらず、出力されない。</p>
-						<code>Sudo apt install os-prober
-							<br>sudo nano /etc/default/grub</code>
+						<p>
+							この例では、GRUBがWindowsを認識しておらず、出力されない。
+						</p>
+						<code>
+							Sudo apt install os-prober
+							<br>sudo nano /etc/default/grub
+						</code>
 						<p>をもう一度開き、</p>
-						<code>GRUB_DEFAULT_OS_PROBER=false</code>
+						<code>
+							GRUB_DEFAULT_OS_PROBER=false
+						</code>
 						<p>を追加</p>
-						<code>sudo update-grub</code>
+						<code>
+							sudo update-grub
+						</code>
 						<p>でもう一度設定を反映させる</p>
 						<img src="images/dual_trouble_2.png">
 						<p>
