@@ -168,11 +168,13 @@
 							Ctrl + alt + F3で仮想コンソールに入る 
 							<br>仮想コンソール…GUIを必要としないプロンプト.起動時だったり、グラボがクラッシュしたあとだったり、画面がうまくつかないときに使える 
 							<br>日本語対応はしていないので◆◆や？？のように文字化けする 
-							<img src="images/GUI_trouble/図1.png">
+							<img src="images/GUI_trouble/図1.png" class="img.big">
 						</p>
 						<p>
 							とりあえずGUIを再起動する 
-							<code>startx</code>
+							<code>
+								startx
+							</code>
 							これは、X Window Systemと呼ばれる (上図のXサーバーとデスクトップ環境のイメージ)GUIシステムを起動するためのコマンド 
 							<br>しかし直らず 
 						</p>
@@ -182,13 +184,17 @@
 						<P>
 							Ubuntu 22.04の標準ディスプレイマネージャーはgdm3 
 						</P>
-						<code>dpkg -l | grep gdm3 </code>
+						<code>
+							dpkg -l | grep gdm3 
+						</code>
 						<p>
-							ｄpkgはaptみたいな感じのパッケージ管理ツール 
+							dpkgはaptみたいな感じのパッケージ管理ツール 
 							ここでは、“gdm3”を含む、インストール済みのパッケージを確認 
 						</p>
-						<img src="images/GUI_trouble/gdm3.png">
-						<code>Ⅱ gdm3  42.0-1ubuntu7.22.04.4 amd64 GNOME Display Manager</code>
+						<img src="images/GUI_trouble/gdm3.png" class="img.big"> 
+						<code>
+							Ⅱ gdm3  42.0-1ubuntu7.22.04.4 amd64 GNOME Display Manager
+						</code>
 						<p>
 							ii → "installed（インストール済み）" 
 						        <br>gdm3 → パッケージ名 
@@ -210,19 +216,27 @@
 							直らず
 						</p>
 						<h3>2. gdm3のエラーログを確認 </h3>
-						<code>jounalctl -xeu gdm       # gdmに関するエラーログを確認 </code>
-						<img src="images/GUI_trouble/gdm_log.jpg">
+						<code>
+							jounalctl -xeu gdm       # gdmに関するエラーログを確認 
+						</code>
+						<img src="images/GUI_trouble/gdm_log.jpg" class="img.big">
 
-						<code>GDM: Failed to contact accountsservice </code>
-						<p>GDMがユーザー情報を取得できず起動に失敗している可能性がある </p>
+						<code>
+							GDM: Failed to contact accountsservice 
+						</code>
+						<p>
+							GDMがユーザー情報を取得できず起動に失敗している可能性がある 
+						</p>
 
 
-						<h3>accountsserviceという，liuxでユーザー管理をするアプリをインストール </h43>
+						<h3>accountsserviceという，liuxでユーザー管理をするパッケージをインストール </h43>
 						<code>
 							dpkg -l | grep accountsservice    
 							<br># "accountsservice"を含むパーッケージがインストールされているか
 						</code>
-						<p>何も出力がなかったので、未インストール状態</p>
+						<p>
+							何も出力がなかったので、未インストール状態
+						</p>
 						<code>
 							sudo apt install accountsservice 
 							sudo reboot 
