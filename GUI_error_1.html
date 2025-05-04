@@ -177,7 +177,7 @@
 						</p>
 
 						<h4>ディスプレイマネージャーについて調べる</h4>
-						<h5>ディスプレイマネージャーがインストールされているかチェック</h5>
+						<h4>1.ディスプレイマネージャーがインストールされているかチェック</h4>
 						<P>
 							Ubuntu 22.04の標準ディスプレイマネージャーはgdm3 
 						</P>
@@ -203,13 +203,13 @@
 						</p>
 						<code>
 							sudo systemctl enable gdm3   # 有効化
-							sudo systemctl start gdm3    # gdmの起動
-							sudo reboot                  # システムの再起動
+							<br>sudo systemctl start gdm3    # gdmの起動
+							<br>sudo reboot                  # システムの再起動
 						</code>
 						<p>
 							直らず
 						</p>
-						<h5>gdm3のエラーログを確認 </h5>
+						<h4>2.gdm3のエラーログを確認 </h4>
 						<code>jounalctl -xeu gdm       # gdmに関するエラーログを確認 </code>
 						<img src="images/GUI_trouble/gdm_log.jpg">
 
@@ -217,7 +217,7 @@
 						<p>GDMがユーザー情報を取得できず起動に失敗している可能性がある </p>
 
 
-						<h6>accountsserviceという，liuxでユーザー管理をするアプリをインストール </h6>
+						<h4>accountsserviceという，liuxでユーザー管理をするアプリをインストール </h4>
 						<code>
 							dpkg -l | grep accountsservice    
 							<br># "accountsservice"を含むパーッケージがインストールされているか
