@@ -158,15 +158,16 @@
 							おそらくGUIがうまく起動していないor認識されていない 
 							<br>下の図は、Linuxの起動~グラフィック出力の簡易図。
 							<br>今回は起動、ログインはできるけどその先のデスクトップ環境に進めない状態 
-							<br>このフローの何処かに問題があると考えられる
-							図を挟む
+							<br>このフローのどこかに問題があると考えられる
+							<img src="images/GUI_trouble/comp_mechanism.png">
+							<a href="https://hrzine.jp/article/detail/37" target="_blank">https://hrzine.jp/article/detail/37</a>
 						</p>
 						<h4>仮想コンソールを起動する</h4>
 						<p>
 							Ctrl + alt + F3で仮想コンソールに入る 
 							<br>仮想コンソール…GUIを必要としないプロンプト.起動時だったり、グラボがクラッシュしたあとだったり、画面がうまくつかないときに使える 
 							<br>日本語対応はしていないので◆◆や？？のように文字化けする 
-							図を挟む
+							<img src="images/GUI_trouble/図1.png">
 						</p>
 						<p>
 							とりあえずGUIを再起動する 
@@ -185,6 +186,7 @@
 							ｄpkgはaptみたいな感じのパッケージ管理ツール 
 							ここでは、“gdm3”を含む、インストール済みのパッケージを確認 
 						</p>
+						<img src="images/GUI_trouble/gdm3.png>
 						<code>Ⅱ gdm3  42.0-1ubuntu7.22.04.4 amd64 GNOME Display Manager</code>
 						<ul>
 							<li>
@@ -209,6 +211,7 @@
 						</p>
 						<h5>gdm3のエラーログを確認 </h5>
 						<code>jounalctl -xeu gdm       # gdmに関するエラーログを確認 </code>
+						<img src="images/GUI_trouble/gdm_log.png>
 
 						<code>GDM: Failed to contact accountsservice </code>
 						<p>GDMがユーザー情報を取得できず起動に失敗している可能性がある </p>
