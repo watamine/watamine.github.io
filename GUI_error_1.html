@@ -154,16 +154,16 @@
 							<br>遠回りをしていそうですが、ついでにGUIやシステム的なところについて色々知ることができたので、このまま残そうと思います。 
 						</P>
 
-						<h3>考えられる原因</h3>
+						<h2>考えられる原因</h2>
 						<p>
 							おそらくGUIがうまく起動していないor認識されていない 
 							<br>下の図は、Linuxの起動~グラフィック出力の簡易図。
 							<br>今回は起動、ログインはできるけどその先のデスクトップ環境に進めない状態 
 							<br>このフローのどこかに問題があると考えられる
 							<img src="images/GUI_trouble/comp_mechanism.png">
-							<a href="https://hrzine.jp/article/detail/37" target="_blank">https://hrzine.jp/article/detail/37</a>
+							<a href="https://hrzine.jp/article/detail/37" target="_blank">https://hrzine.jp/article/detail/37</a>を改変
 						</p>
-						<h4>仮想コンソールを起動する</h4>
+						<h2>仮想コンソールを起動する</h2>
 						<p>
 							Ctrl + alt + F3で仮想コンソールに入る 
 							<br>仮想コンソール…GUIを必要としないプロンプト.起動時だったり、グラボがクラッシュしたあとだったり、画面がうまくつかないときに使える 
@@ -177,8 +177,8 @@
 							<br>しかし直らず 
 						</p>
 
-						<h4>ディスプレイマネージャーについて調べる</h4>
-						<h4>1.ディスプレイマネージャーがインストールされているかチェック</h4>
+						<h2>ディスプレイマネージャーについて調べる</h2>
+						<h3>1. ディスプレイマネージャーがインストールされているかチェック</h3>
 						<P>
 							Ubuntu 22.04の標準ディスプレイマネージャーはgdm3 
 						</P>
@@ -189,28 +189,27 @@
 						</p>
 						<img src="images/GUI_trouble/gdm3.png">
 						<code>Ⅱ gdm3  42.0-1ubuntu7.22.04.4 amd64 GNOME Display Manager</code>
-						<ul>
-							<li>
-								ii → "installed（インストール済み）" 
-								gdm3 → パッケージ名 
-								42.0-1ubuntu7 → バージョン 
-								amd64 → アーキテクチャ（64bit） 
-								GNOME Display Manager → 説明 
-							</li>
-						</ul>
+						<p>
+							ii → "installed（インストール済み）" 
+						        <br>gdm3 → パッケージ名 
+							<br>42.0-1ubuntu7 → バージョン 
+							<br>amd64 → アーキテクチャ（64bit） 
+							<br>GNOME Display Manager → 説明 
+
+						</p>
 						<p>
 							Gdmはインストールされている
 							<br>gdmを再起動する
 						</p>
 						<code>
-							sudo systemctl enable gdm3   # 有効化
-							<br>sudo systemctl start gdm3    # gdmの起動
-							<br>sudo reboot                  # システムの再起動
+							sudo systemctl enable gdm3     # 有効化
+							<br>sudo systemctl start gdm3      # gdmの起動
+							<br>sudo reboot                    # システムの再起動
 						</code>
 						<p>
 							直らず
 						</p>
-						<h4>2.gdm3のエラーログを確認 </h4>
+						<h3>2. gdm3のエラーログを確認 </h3>
 						<code>jounalctl -xeu gdm       # gdmに関するエラーログを確認 </code>
 						<img src="images/GUI_trouble/gdm_log.jpg">
 
@@ -218,7 +217,7 @@
 						<p>GDMがユーザー情報を取得できず起動に失敗している可能性がある </p>
 
 
-						<h4>accountsserviceという，liuxでユーザー管理をするアプリをインストール </h4>
+						<h3>accountsserviceという，liuxでユーザー管理をするアプリをインストール </h43>
 						<code>
 							dpkg -l | grep accountsservice    
 							<br># "accountsservice"を含むパーッケージがインストールされているか
@@ -230,13 +229,13 @@
 						</code>
 						<p>直らず</p>
 
-						<h4>ここまでやったこと</h4>
+						<h2>ここまでやったこと</h2>
 						<p>
 							システム再起動、X window system再起動
 							<br>デスクトップ環境(gdm) に問題があるかを確認した
 							いずれの手順でも原因はわからなかった。
 						</p>
-						<h4>次回 (後編)</h4>
+						<h3>次回 (後編)</h3>
 						<p>
 							デスクトップ環境やXサーバーを含む、X window systemについて異常があるか確認する
 						</p>
