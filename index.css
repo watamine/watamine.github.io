@@ -108,11 +108,54 @@ header p {
 	font-size: 14px;
 	color: #666;
 }
+
+.menu-toggle {
+  display: none;
+}
+
+/* --- スマホ向けスタイル --- */
 @media screen and (max-width: 480px) {
- .wrapper {
-  display: block;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-  min-width: initial;
- }
+  .wrapper {
+    /* 必要に応じて調整 */
+  }
+
+  main {
+    width: 100%; /* メインコンテンツは全幅 */
+  }
+
+  aside {
+    display: none; /* サイドバーを非表示に */
+    /* ハンバーガーメニューで表示/非表示を切り替える場合は、
+       JavaScriptと連携してクラスを付け外しし、
+       そのクラスに対して display: block; などを指定します */
+  }
+
+  /* ハンバーガーメニュー用のボタンスタイル (例) */
+  .menu-toggle {
+    display: block; /* スマホでは表示 */
+    position: fixed; /* または他の位置 */
+    top: 10px;
+    right: 10px;
+    /* ボタンの見た目を整えるスタイル */
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 1000; /* 他の要素より手前に */
+  }
+
+  /* メニュー表示時のスタイル (例: JavaScriptで .is-open クラスをasideに追加) */
+  aside.is-open {
+    display: block;
+    position: fixed; /* または absolute */
+    top: 0;
+    left: 0;
+    width: 80%; /* 画面幅の80% */
+    height: 100vh; /* 画面の高さ */
+    background-color: #f0f0f0;
+    z-index: 999;
+    overflow-y: auto; /* コンテンツが多い場合にスクロール */
+    /* 必要に応じてアニメーションを追加 */
+  }
+}
