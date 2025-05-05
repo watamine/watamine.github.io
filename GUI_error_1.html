@@ -51,7 +51,9 @@
 							<br>今回は起動、ログインはできるけどその先のデスクトップ環境に進めない状態 
 							<br>このフローのどこかに問題があると考えられる
 							<img src="images/GUI_trouble/comp_mechanism.png">
-							<a href="https://hrzine.jp/article/detail/37" target="_blank">https://hrzine.jp/article/detail/37</a>を改変
+							<p class="center-text">
+								<a href="https://hrzine.jp/article/detail/37" target="_blank">https://hrzine.jp/article/detail/37</a>を改変
+							</p>
 						</p>
 						<h2>仮想コンソールを起動する</h2>
 						<p>
@@ -81,7 +83,7 @@
 							dpkgはaptみたいな感じのパッケージ管理ツール 
 							ここでは、“gdm3”を含む、インストール済みのパッケージを確認 
 						</p>
-						<img src="images/GUI_trouble/gdm3.png" class="img.big"> 
+						<img src="images/GUI_trouble/gdm3.png" class="big"> 
 						<code>
 							Ⅱ gdm3  42.0-1ubuntu7.22.04.4 amd64 GNOME Display Manager
 						</code>
@@ -109,7 +111,7 @@
 						<code>
 							jounalctl -xeu gdm       # gdmに関するエラーログを確認 
 						</code>
-						<img src="images/GUI_trouble/gdm_log.jpg" class="img.big">
+						<img src="images/GUI_trouble/gdm_log.jpg" class="big">
 
 						<code>
 							GDM: Failed to contact accountsservice 
