@@ -159,3 +159,21 @@ header p {
     /* 必要に応じてアニメーションを追加 */
   }
 }
+
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block !important; /* 強制表示 */
+    width: 50px !important;    /* 大きなサイズ */
+    height: 50px !important;   /* 大きなサイズ */
+    background-color: red !important; /* 目立つ色 */
+    border: 2px solid yellow !important; /* 目立つ枠線 */
+    z-index: 9999 !important; /* 最前面 */
+    position: fixed; /* 位置を固定 */
+    top: 10px;
+    right: 10px;
+  }
+  /* 中の線は一旦無視 */
+  .menu-toggle span {
+     display: none; /* 一旦非表示 */
+  }
+}
