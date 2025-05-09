@@ -135,10 +135,10 @@ header p {
     display: block; /* スマホでは表示 */
     position: fixed; /* または他の位置 */
     top: 10px;
-    right: 10px;
+    left: 10px;
     /* ボタンの見た目を整えるスタイル */
     padding: 10px;
-    background-color: #333;
+    background-color: #C3D5C7;
     color: white;
     border: none;
     cursor: pointer;
