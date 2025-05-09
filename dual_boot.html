@@ -1,234 +1,232 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <title>タイトル</title>
-  <meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, Windows11 Home, BIOS">
-  <meta name="description" content="自作pcをUnuntuとWindows11 Homeのデュアルブート仕様にします．ちゃんと起動時にOSを選択できるようにしました．">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="index.css">
-
-
+	<meta charset="utf-8">
+	<title>タイトル</title>
+	<meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, Windows11 Home, BIOS">
+	<meta name="description" content="自作pcをUnuntuとWindows11 Homeのデュアルブート仕様にします．ちゃんと起動時にOSを選択できるようにしました．">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="index.css">
 </head>
-	<body>
-		<div id="outer">
-			<header>
-				<div id="header-container">
-					<div id="head-inner">
-						<h1>自作pcでいろいろやった</h1>
-						<p class="description">東北大学大学院生命科学研究科　渡邊峰</p></div></div>
-			</header>
-			<aside>
-				<nav>
-					<div class="left-title">
-						<a href="index.html">
-							トップページ
-						</a>
-						<br>
-					</div>
-					<ul>
-						<li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
-						<li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
-						<li><a href="server_construction.html">サーバーを構築してみた</a></li>
-						<li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
-						<li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
-					</ul>
-				</nav>
-			</aside>
+<body>
+	<div id="outer">
+		<header>
+			<div id="header-container">
+				<div id="head-inner">
+					<h1>自作pcでいろいろやった</h1>
+					<p class="description">東北大学大学院生命科学研究科　渡邊峰</p></div></div>
+		</header>
+		<aside>
+			<nav>
+				<div class="left-title">
+					<a href="index.html">
+						トップページ
+					</a>
+					<br>
+				</div>
+				<ul>
+					<li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
+					<li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
+					<li><a href="server_construction.html">サーバーを構築してみた</a></li>
+					<li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
+					<li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
+				</ul>
+			</nav>
+		</aside>
 
-			<div id="content">
-				
-				<main>
-					<div id="inner">
-						<h1>自作pcをデュアルブートにしてみる</h2>
-						<p>マルチルブート…一台のコンピューターに複数の異なるオペレーティングシステムを導入すること。
-							<br>2つだとデュアルブート、3つだとトリプルブート、4つだとクアトロブート？みたいに続くらしい。
-							<br class="spaced-br">今回はUbuntu 22.04とWindows11 Homeの二刀流にする。</p>
-						<br>
-						<h3>必要なもの</h3>
+		<div id="content">
+			
+			<main>
+				<div id="inner">
+					<h1>自作pcをデュアルブートにしてみる</h2>
+					<p>マルチルブート…一台のコンピューターに複数の異なるオペレーティングシステムを導入すること。
+						<br>2つだとデュアルブート、3つだとトリプルブート、4つだとクアトロブート？みたいに続くらしい。
+						<br class="spaced-br">今回はUbuntu 22.04とWindows11 Homeの二刀流にする。</p>
+					<br>
+					<h3>必要なもの</h3>
+					<ul>
+						<li>pc</li>
 						<ul>
-							<li>pc</li>
-							<ul>
-								<li>充分な空き容量のSSD
-									<br>それぞれのシステムが干渉して不具合を起こすことがあるらしいのでOSの数だけ (今回は2枚)あると安心</li>
-								<li>できれば有線LANだと楽かも</li>
-							</ul>
-							<br>
-							<li>それぞれのOSのディスクイメージ (.ISOファイル)。USBメモリに保存しておくのが多分一般的</li>
-							<ul>
-								<li>
-									<p>
-									Linuxは無料で使えるけど、Windowsは2万ほどかかる
-									<br>
-									<a href="https://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0" target="_blank">https://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0</a>
-									<br class="spaced-br">
-									東北大学でwindows11のライセンスを取得しているので学生及び教職員は無料で使える。
-									<br>
-									<a href="https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38" target="_blank">Googleフォーム</a>で申請	
-									</p>
-								</li>
-							</ul>
+							<li>充分な空き容量のSSD
+								<br>それぞれのシステムが干渉して不具合を起こすことがあるらしいのでOSの数だけ (今回は2枚)あると安心</li>
+							<li>できれば有線LANだと楽かも</li>
 						</ul>
 						<br>
+						<li>それぞれのOSのディスクイメージ (.ISOファイル)。USBメモリに保存しておくのが多分一般的</li>
+						<ul>
+							<li>
+								<p>
+								Linuxは無料で使えるけど、Windowsは2万ほどかかる
+								<br>
+								<a href="https://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0" target="_blank">https://www.microsoft.com/ja-jp/d/windows-11-home/dg7gmgf0krt0</a>
+								<br class="spaced-br">
+								東北大学でwindows11のライセンスを取得しているので学生及び教職員は無料で使える。
+								<br>
+								<a href="https://sites.google.com/tohoku.ac.jp/oids-in/services/microsoft#h.ca36swbmqs38" target="_blank">Googleフォーム</a>で申請	
+								</p>
+							</li>
+						</ul>
+					</ul>
+					<br>
+					
+					<h3>使用したpcスペック</h3>
+					<a href="pc_enviroment.html">pcのスペックおよび作業環境</a>
+					
+					<h2>1. USBを使ってのOSインストール</h2>
+					<p>PCの電源を落とし、UbuntuのインストールされたSSDを抜き、Windowsをインストール予定のSSDを
+						<br>取り付ける。
+						<br class="spaced-br">
+						PCの電源を落とした状態から、ISOの入ったUSBを繋げて起動する。
+						<br>基本的には指示にしたがって進めればOK（画像なくてごめんなさい）
+						<br>言語、エディション、キーボード設定など。
+						<br class="spaced-br">
+						ネットワーク接続のとき、有線接続しているのに認識されなかったけど、抜き差ししたら解決した。
+					</p>
+					<img src="images/dula_LAN.png">
+					<p class="center-text">
+						<a href="https://www.checkfield.co.jp/staff-blog/review/24451" target="_blank">https://www.checkfield.co.jp/staff-blog/review/24451</a>
+					</p>
+					<p>
+						認識されない場合は、LANドライバーを別のパソコンからインストールする必要があるらしい。
+						<br>面倒くさそう
+						<br class="spaced-br">
+						ここを乗り越えればインストール完了。Microsoftの初期設定に進む。
+					</p>
+					<br>
 						
-						<h3>使用したpcスペック</h3>
-						<a href="pc_enviroment.html">pcのスペックおよび作業環境</a>
+					<h2>2. 起動優先順位と選択画面の設定</h2>
+					<p>
+						UbuntuのインストールされたSSDを取り付ければ、Windows11とUbuntuの
+						<br>デュアルブート仕様になる。（このあと確認）								
+						<br class="spaced-br">
+						しかし、このまま電源を入れてもおそらく、WindowsかUbuntuどちらかが起動するだけで
+						<br>OSを選択することができない。
+						<br class="spaced-br">
+						そこで、起動時にOSを選択する画面を出力するように設定し、
+						<br>一定時間どちらも選択しなければ、より優先度の高い方を起動するようにする。
+						<br class="spaced-br">
+						今回はUbuntuを優先度の高いOSとして設定する。
+					</p>
 						
-						<h2>1. USBを使ってのOSインストール</h2>
-						<p>PCの電源を落とし、UbuntuのインストールされたSSDを抜き、Windowsをインストール予定のSSDを
-							<br>取り付ける。
-							<br class="spaced-br">
-							PCの電源を落とした状態から、ISOの入ったUSBを繋げて起動する。
-							<br>基本的には指示にしたがって進めればOK（画像なくてごめんなさい）
-							<br>言語、エディション、キーボード設定など。
-							<br class="spaced-br">
-							ネットワーク接続のとき、有線接続しているのに認識されなかったけど、抜き差ししたら解決した。
-						</p>
-						<img src="images/dula_LAN.png">
-						<p class="center-text">
-							<a href="https://www.checkfield.co.jp/staff-blog/review/24451" target="_blank">https://www.checkfield.co.jp/staff-blog/review/24451</a>
-						</p>
-						<p>
-							認識されない場合は、LANドライバーを別のパソコンからインストールする必要があるらしい。
-							<br>面倒くさそう
-							<br class="spaced-br">
-							ここを乗り越えればインストール完了。Microsoftの初期設定に進む。
-						</p>
-						<br>
-							
-						<h2>2. 起動優先順位と選択画面の設定</h2>
-						<p>
-							UbuntuのインストールされたSSDを取り付ければ、Windows11とUbuntuの
-							<br>デュアルブート仕様になる。（このあと確認）								
-							<br class="spaced-br">
-							しかし、このまま電源を入れてもおそらく、WindowsかUbuntuどちらかが起動するだけで
-							<br>OSを選択することができない。
-							<br class="spaced-br">
-							そこで、起動時にOSを選択する画面を出力するように設定し、
-							<br>一定時間どちらも選択しなければ、より優先度の高い方を起動するようにする。
-							<br class="spaced-br">
-							今回はUbuntuを優先度の高いOSとして設定する。
-						</p>
-							
-						<h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
-						<p>
-							PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）
-							<br>BIOS画面を呼び出す。画面の構成はマザーボードによって異なる
-						</p>
-						<img src="images/dual_bios.png">
+					<h3>BIOS画面で2つのOSを確認＆優先順位を設定</h3>
+					<p>
+						PCを再起動し、Deleteキーを連打して（マザーボードのメーカーや型番によってキーは異なる）
+						<br>BIOS画面を呼び出す。画面の構成はマザーボードによって異なる
+					</p>
+					<img src="images/dual_bios.png">
+					<br>
+					<br>
+					<p>
+						まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認
+						<br>Settings\System Status のところ
+					</p>
+					<img src="images/dual_ssd.jpg">
+					<p>
+						M2_1,M2_2のところ。しっかり認識されているので問題なし
 						<br>
 						<br>
-						<p>
-							まず、OSのインストールされた2枚のSSDがしっかり認識されているかを確認
-							<br>Settings\System Status のところ
-						</p>
-						<img src="images/dual_ssd.jpg">
-						<p>
-							M2_1,M2_2のところ。しっかり認識されているので問題なし
-							<br>
-							<br>
-							<br>次に、2枚のSSDの起動優先順位を設定
-							<br>Settings\Boot\UEFI Hard Disk Drive BBS Priorities のところ
-						</p>
-						<img src="images/dual_priority.jpg">
-						<p>
-							Option #1が優先順位高い方。今回はUbuntuを#1にセットする。
-							<br class="spaced-br">
-							Save & Exitで再起動
-							<br class="spaced-br">
-							これで、Ubuntuが優先的に起動するようになった。
-						</p>
-						<br>
-						<h3>起動時に一定時間選択画面を出力する</h3>
-						<p>
-							今回はGRUBと呼ばれる、ブートローダー (ハードディスクからOSを起動するプログラム) を使用する。
-						</p>
-						<p>
-							優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。
-						</p>
-						<br>
-						<code>
-							sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg
-						</code>
-						<img.big src="images/Screenshot from 2025-04-13 21-23-07.png">
-						<p>
-							OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
-							<br>どちらか片方しかない場合→トラブルシューティングへ
-						</p>
-						<br>
-						<br>
-						<p>次に、</p>
-						<code>
-							sudo nano /etc/default/grub
-						</code>
-						<p>
-							このファイルで起動時の設定を行う
-							<br>私の場合、デフォルトではこんな感じでした↓
-						</p>
-						<img src="images/dual_grubfile.png">
-						<br>
-						<p>
-							これをこのように書き換える<
-									     /p>
-						<img src="images/Screenshot from 2025-04-19 02-21-25.png">
-						<code>
-							GRUB_DEFAULT=0 
-							<br># デフォルトで起動するOSを選択。この0,1..は、先程のコマンドの出力の上から順に対応
-							<br>GRUB_TIMEOUT_STYLE=menu       # 起動時にOS選択画面を出力
-							<br>GRUB_TIMEOUT=10       # 選択画面の表示時間を10秒に設定
-							<br>GRUB_HIDDEN_TIMEOUT_QUIET=false       # 10秒のカウントダウンを表示
-						</code>
-						<br>
-						
-						<code>
-							sudo update-grub       # 設定を反映
-							<br>sudo reboot       # 再起動
-						</code>
-						<p>
-							うまくいけば下のような画面が出力されるはず
-						</p>
-						<img src="images/dual_select.png">
-						<br>
-						<h3>トラブルシューティング</h3>
-						<code>
-							sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg
-						</code>
-						<p>
-							を実行しても2つのOSが表示されない
-						</p>
-						<img.big src="images/Screenshot from 2025-04-19 02-17-05.png">
-						<p>
-							この例では、GRUBがWindowsを認識しておらず、出力されない。
-						</p>
-						<code>
-							Sudo apt install os-prober
-							<br>sudo nano /etc/default/grub
-						</code>
-						<p>をもう一度開き、</p>
-						<code>
-							GRUB_DEFAULT_OS_PROBER=false
-						</code>
-						<p>を追加</p>
-						<code>
-							sudo update-grub
-						</code>
-						<p>でもう一度設定を反映させる</p>
-						<img src="images/dual_trouble_2.png">
-						<p>
-							Found windows Boot Manager...でよさげになった
-							<br>最後に動作確認のため、もう一回再起動する
-						</p>
-						<p>選択画面が表示された！</p>
-						<img src="images/dual_select.png">
-						
-						<h4>参考記事</h4>
-						<p>
-							<a href="https://www.youtube.com/watch?v=sGDH5hS3uAY" target="_blank">https://www.youtube.com/watch?v=sGDH5hS3uAY</a>
-							<br>chatGPT</p>
-					</div>
-				</main>
-			</div>
+						<br>次に、2枚のSSDの起動優先順位を設定
+						<br>Settings\Boot\UEFI Hard Disk Drive BBS Priorities のところ
+					</p>
+					<img src="images/dual_priority.jpg">
+					<p>
+						Option #1が優先順位高い方。今回はUbuntuを#1にセットする。
+						<br class="spaced-br">
+						Save & Exitで再起動
+						<br class="spaced-br">
+						これで、Ubuntuが優先的に起動するようになった。
+					</p>
+					<br>
+					<h3>起動時に一定時間選択画面を出力する</h3>
+					<p>
+						今回はGRUBと呼ばれる、ブートローダー (ハードディスクからOSを起動するプログラム) を使用する。
+					</p>
+					<p>
+						優先OS（今回はUbuntu）のターミナルを起動し、以下のコマンドを実行する。
+					</p>
+					<br>
+					<code>
+						sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg
+					</code>
+					<img.big src="images/Screenshot from 2025-04-13 21-23-07.png">
+					<p>
+						OS選択画面で登録されているOS一覧。とりあえず、’Ubuntu’と’Windows Boot Manger’があればOK
+						<br>どちらか片方しかない場合→トラブルシューティングへ
+					</p>
+					<br>
+					<br>
+					<p>次に、</p>
+					<code>
+						sudo nano /etc/default/grub
+					</code>
+					<p>
+						このファイルで起動時の設定を行う
+						<br>私の場合、デフォルトではこんな感じでした↓
+					</p>
+					<img src="images/dual_grubfile.png">
+					<br>
+					<p>
+						これをこのように書き換える<
+										/p>
+					<img src="images/Screenshot from 2025-04-19 02-21-25.png">
+					<code>
+						GRUB_DEFAULT=0 
+						<br># デフォルトで起動するOSを選択。この0,1..は、先程のコマンドの出力の上から順に対応
+						<br>GRUB_TIMEOUT_STYLE=menu       # 起動時にOS選択画面を出力
+						<br>GRUB_TIMEOUT=10       # 選択画面の表示時間を10秒に設定
+						<br>GRUB_HIDDEN_TIMEOUT_QUIET=false       # 10秒のカウントダウンを表示
+					</code>
+					<br>
+					
+					<code>
+						sudo update-grub       # 設定を反映
+						<br>sudo reboot       # 再起動
+					</code>
+					<p>
+						うまくいけば下のような画面が出力されるはず
+					</p>
+					<img src="images/dual_select.png">
+					<br>
+					<h3>トラブルシューティング</h3>
+					<code>
+						sudo grep -e "^\(menuentry\)\|\(submenu\)" /boot/grub/grub.cfg
+					</code>
+					<p>
+						を実行しても2つのOSが表示されない
+					</p>
+					<img.big src="images/Screenshot from 2025-04-19 02-17-05.png">
+					<p>
+						この例では、GRUBがWindowsを認識しておらず、出力されない。
+					</p>
+					<code>
+						Sudo apt install os-prober
+						<br>sudo nano /etc/default/grub
+					</code>
+					<p>をもう一度開き、</p>
+					<code>
+						GRUB_DEFAULT_OS_PROBER=false
+					</code>
+					<p>を追加</p>
+					<code>
+						sudo update-grub
+					</code>
+					<p>でもう一度設定を反映させる</p>
+					<img src="images/dual_trouble_2.png">
+					<p>
+						Found windows Boot Manager...でよさげになった
+						<br>最後に動作確認のため、もう一回再起動する
+					</p>
+					<p>選択画面が表示された！</p>
+					<img src="images/dual_select.png">
+					
+					<h4>参考記事</h4>
+					<p>
+						<a href="https://www.youtube.com/watch?v=sGDH5hS3uAY" target="_blank">https://www.youtube.com/watch?v=sGDH5hS3uAY</a>
+						<br>chatGPT</p>
+				</div>
+			</main>
 		</div>
-		<script src="script.js"></script>
-	</body>
+	</div>
+	<script src="script.js"></script>
+</body>
 </html>
