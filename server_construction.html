@@ -49,10 +49,10 @@
                     <div class="column-box">
                         <h2 class="column-title">目次</h2>
                         <p class="column-content">
-                          <ul>
-                            <li>サーバーを構築する</li>
-                            <li>IPアドレスを固定する</li>
-                          </ul>
+                            <ul>
+                                <li>サーバーを構築する</li>
+                                <li>IPアドレスを固定する</li>
+                            </ul>
                         </p>
                     </div>
                     <h3>使用したpcスペック</h3>
@@ -87,7 +87,7 @@
                         IPアドレスは、接続先のコンピューターのネットワークを識別する番号
                     </p>
                     <code>
-                        IP link
+                        iP link
                     </code>
                     <p>で確認<br>
                         Ubuntuマシンのパスワードを入力
@@ -104,6 +104,7 @@
                     <h4>
                         ここから最低限サーバーとして成り立たせるための設定を行う (セキュリティ、IPアドレスなど)
                     </h4>
+                    <br>
 
                     <h3>IPアドレスを固定する</h3>
                     <p>
@@ -118,29 +119,29 @@
                         以下のように書き換える。<br>
                     </p>
                     <code>
-                        network:
-                            version: 2
-                            renderer: NetworkManager
-                            ethernets:
-                                enp3s0(ネットワークインターフェース):
-                                    dhcp4: no
-                                    addresses:
-                                        - IPアドレス
-                                    routes:
-                                        - to: 0.0.0.0/0
-                                            via: ゲートウェイ
-                                    nameservers:
-                                        addresses:
-                                            - DNS
+                        network:<br>
+                            version: 2<br>
+                            renderer: NetworkManager<br>
+                            ethernets:<br>
+                                enp3s0(ネットワークインターフェース):<br>
+                                    dhcp4: no<br>
+                                    addresses:<br>
+                                        - IPアドレス<br>
+                                    routes:<br>
+                                        - to: 0.0.0.0/0<br>
+                                            via: ゲートウェイ<br>
+                                    nameservers:<br>
+                                        addresses:<br>
+                                            - DNS<br>
                     </code>
                     <p>
                         ちょっと小難しいけど、要はネットワーク系アドレスを指定している。<br>
                         それぞれの項目の確認の仕方は以下の通り。
                     </p>
                     <code>
-                        ip a                     # ネットワークインターフェースの確認
-                        ip route                 # ゲートウェイの確認 default viaに続く箇所
-                        less /etc/resolv.conf    # DNSの確認 nameserverに続く箇所
+                        ip a                     # ネットワークインターフェースの確認<br>
+                        ip route                 # ゲートウェイの確認 default viaに続く箇所<br>
+                        less /etc/resolv.conf    # DNSの確認 nameserverに続く箇所<br>
                     </code>
                     <p>  
                         書き換えたら保存して終了。
@@ -160,7 +161,7 @@
                     </code>
                     <p>       
                         セキュリティが甘いよ！ってことらしい。
-                    </p>>
+                    </p>
                     <code>
                         sudo chmod 600 /etc/netplan/01-network-manager-all.yaml
                     </code>
@@ -174,6 +175,7 @@
                     <p>
                         警告が消えたら成功。
                     </p>
+                    <br>
                     
                     <h3>ファイアウォールの設定</h3>
                     <p>
