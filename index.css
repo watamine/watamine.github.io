@@ -9,6 +9,11 @@ aside {
 	padding: 15px;
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
+aside ul {
+  list-style: none; /* 箇条書きの「・」を削除 */
+  padding: 0;       /* 左の余白を削除 */
+  margin: 0;        /* 上下の余白を削除 */
+}
 body {
 	margin: 0;
 	padding: 0;
