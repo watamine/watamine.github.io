@@ -1,0 +1,153 @@
+sudo apt install openssh-server
+systemctl status ssh
+これでactive (running)  を確認
+
+ip linkでホストのIPアドレスを確認
+
+ssh watamine(ホストのユーザーネーム)@(ホストのIPアドレス) で接続
+passwordを入力では、ホストのパスワードを入力
+Warning: Permanently added '192.168.151.52' (ED25519) to the list of known hosts.
+これは正常な警告文
+
+ここまでで、サーバー構築ができた。
+ほかデバイスでも同様に接続可能。macbookで同じWIFIから接続確認。
+
+ipアドレス固定
+ネットワークインターフェイスを確認（ip a）enp3s0
+ip routeで、IP, ゲートウェイ、dnsを確認
+ゲートウェイ　192.168.150.1
+ip aでipアドレス確認　192.168.151.52/23
+less /etc/resolv.confでDNS確認
+nameserver 127.0.0.53
+
+sudo nano /etc/netplan/01-network-manager-all.yaml
+書き込み禁止ファイルなので、sudo権限必要
+以下のように書き換える
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    enp3s0:
+      dhcp4: no
+      addresses:
+        - 192.168.1.52/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.150.1
+      nameservers:
+        addresses:
+          - 127.0.0.53
+
+sudo netplan applyで設定
+
+以下の警告文が出力された
+** (generate:9439): WARNING **: 23:03:11.055: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+** (process:9436): WARNING **: 23:03:11.235: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+** (process:9436): WARNING **: 23:03:11.401: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+** (process:9436): WARNING **: 23:03:11.401: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+
+おそらくセキュリティ的なもの
+sudo chmod 600 /etc/netplan/01-network-manager-all.yaml
+もう一度sudo netplan applyで警告消えた
+
+ipアドレスでなく、名前でログイン
+nano ~/.ssh/config
+Host mineserver
+    HostName 192.168.1.52
+    User watamine
+このように編集
+ssh mineserverで入れるはず
+警告文は無視してオッケー
+
+セキュリティー
+UFWでファイアウォールを設定
+
+
+ssh秘密鍵生成
+macbookで、ssh-keygen -t ed25519 -f id_ed25519\mineserver     # ファイルを上書きしないように
+ssh-copy-id がうまくいかない　
+普通のssh接続もきていない
+configファイル設定確認してもダメ
+ssh mineserverでも、ssh watamine@ipアドレスでもダメ
+
+ping 192.168.1.52でネットワークん疎通確認ができているか確認したところ、Request timeout for icmp_seq 1　のような出力となったため、ネットワーク問題
+https://it-biz.online/it-skills/ssh_troubleshooting/#toc1
+
+ubuntuマシンでping -c 4 8.8.8.8　を実行→応答あり、インタ^ネット接続確認
+ping -c macのipアドレス　を実行→タイムアウト
+ubuntuマシンとmacbookのIPアドレスが違うことで、ネットワークが分断されていることが原因（有線・無線）
+wifi側の設定か、macbookを有線接続できれば手っ取り早いけど、変換アダプタが必要
+
+外部ネットワーク接続に切り替え→ポートフォワーディング
+LANそのものの設定が必要だったりなので、ngrokでなんとかする方向
+いくらかかる？
+
+https://qiita.com/miyamotok0105/items/ebadc13baa74a3d4aff9
+https://itsec-arekore.blogspot.com/2020/11/ngrokssh.html
+
+ngrok登録（GITHUB）
+ngrok-v3-stable-linux-amd64.tgz をダウンロード、展開
+sudo mv ngrok /usr/local/bin/　を実行
+ngrokでトークンを確認
+ngrok config add-authtoken 2vXcYriqqoPrEwJlxCqG3ErMtwC_3LS6XwMkLGMeJrRR56Ak3
+を実行→　Authtoken saved to configuration file: /home/watamine/.config/ngrok/ngrok.yml
+ ngrok tcp 22を実行するとできるはずが、エラーになる。クレジットカード登録が必要　jcbはダメ…
+
+2週間位待ってmastercaed発行
+
+
+ngrok config add-authtoken 2vXcYriqqoPrEwJlxCqG3ErMtwC_3LS6XwMkLGMeJrRR56Ak3
+できた！！
+ngrok tcp 22
+で２２ポートを公開する
+出力先に乗っているリンクで接続できる！！
+そのときにパスワードも入力
+
+コントロール＋Cでセッションを終了すると、自動的に接続も解除
+
+ngrok tcp 22でリンクを確認すればまた接続できるけど、毎回変わってしまう
+ランダムな数字が振られるらしい
+
+
+#### セキュリティ向上のため、SSH秘密鍵と公開鍵を設定
+ランダムアドレス＋パスワードだと、総当りで認証できてしまう恐れがある。
+パスワード認証をなくして、SSH秘密鍵と公開鍵を使う
+
+以前生成したけど登録できなかったキーを認証する
+macbookから、ssh-copy-id-i ed_25519_mineserved.pub -p 11549 watamine@0.tcp.jp.ngrok.io
+サーバー側の.ssh/authorized\keysで存在を確認
+
+パスワード認証を無効にする
+sudo nano /etc/ssh/sshd_config
+
+PasswordAuthentication no
+PermitRootLogin no
+に変更or追記
+
+sudo systemctl restart ssh
+で再起動して設定を適用
+
+macbook側で再び
+ssh watamine@0.tcp.jp.ngrok.io -p ---
+で接続しようとすると、Permission denied (public key)
+となり弾かれてしまう→セキュリティ向上成功
+
+接続するときは、
+sh -i ~/.ssh/id_ed25519 -p 12345 yourusername@0.tcp.ngrok.io
+のようにsshキーを指定する必要がある
+楽に接続するために、configファイルを書き換える
+ssh mineserverで接続できる
+
+これでもアドレスは固定されてないのでまだ面倒
+ホストマシンでサーバーを開いたときにconfigファイルを更新するスクリプトを用意
+~/.config/ngrok/ngrok.yml　を編集
+ngrok/start_ngrok_ssh2.sh　を作成
+これを実行すると.ssh/configファイルが書き換えられる
+
+
+XERYSWK5MRYTTXMVNDGAX3URT635JLFP
+192.168.1.52/24

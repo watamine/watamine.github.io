@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>サーバーを構築してみた</title>
+  <meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰>
+  <meta name="description" content="Ubuntuで自宅サーバーを構築します．基本的にお金はかけたくありません">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+
+</head>
+<body>
+    <div id="outer">
+        <header>
+            <h1>Home</h1>
+            <p>東北大学大学院生命科学研究科　渡邊峰</p>
+            <button class="menu-toggle">メニュー</button>
+        </header>   
+        
+        <aside>
+            <nav>				
+                <ul>
+                    <li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
+                    <li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
+                    <li><a href="server_construction.html">サーバーを構築してみた</a></li>
+                    <li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
+                    <li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <div id="content">
+            <main>
+                <div id="inner">
+                    <h1>自宅サーバーを構築してみる</h1>
+                    <p>
+                        タイトルの通りです。<br>
+                        特に目的はありませんがせっかくUbuntuをインストールしたので、サーバーを構築してみます。<br>
+                        用途も決まっていませんが、基本的にお金はかけません。
+                    </p>
+                    <div class="column-box">
+                        <h2 class="column-title">目次</h2>
+                        <p class="column-content">
+                          <ul>
+                            <li>サーバーを構築する</li>
+                            <li>IPアドレスを固定する</li>
+                          </ul>
+                        </p>
+                    </div>
+                    <h3>使用したpcスペック</h3>
+						<a href="pc_enviroment.html">pcのスペックおよび作業環境</a>
+
+                    <h3>サーバーを構築する</h3>
+                    <p>
+                        ターミナルを起動して以下を実行します
+                    </p>
+                    <code>
+                        sudo apt install openssh-server<br>
+                        systemctl status ssh
+                    </code>
+                    <p>
+                        これでactive (running)  を確認<br>
+                        <b>"サーバーの構築"という目的は実はこれで達成できました。</b><br>
+                        とはいえ一般的な解析サーバーやアプリサーバーのような機能があるわけではなく、このマシンにsshで接続できるようになっただけ。<br>
+                        OpenSSHとは、SSHでリモートコンピューターに接続するためのソフトウェア                       
+                    </p>
+                    <h4>接続してみる</h4>
+                    <p>
+                        普段スパコンにssh接続する感じ。手元のラボmacから接続してみる。<br>
+                        <b>無線、有線どちらにしても、同じネットワークに接続されている必要がある</b><br>
+                        無線✖️有線みたいな組み合わせだと違うネットワークと認識されてしまって接続できないので注意<br>
+                        <code>ssh ユーザー名@IPアドレス</code>
+                        IPアドレスは、接続先のコンピューターのネットワークを識別する番号
+                        <code>IP link</code>
+                        で確認<br>
+                        Ubuntuマシンのパスワードを入力
+                        <code>Warning: Permanently added 'IPアドレス' (ED25519) to the list of known hosts.</code><br>
+                        と出力されるが確認のようなものなのでそのまま進んでOK
+                        <br><br>
+                        問題なければssh接続成功！<br>
+                        ラボmacからUbuntuマシンに接続できた
+                    </p>
+                    <p>
+                        ここから最低限サーバーとして成り立たせるための設定を行う (セキュリティ、IPアドレスなど)
+                    </p>
+
+                    <h3>IPアドレスを固定する</h3>
+                    <p>
+                        IPアドレスはDHCP機能により自動で割り振られるが、再起動や電源オフで変わってしまう場合がある。<br>
+                        SSHのたびに接続先のIPアドレスを確認しなければならないは面倒なので固定する。<br>
+
+                        <code>
+                            sudo nano /etc/netplan/01-network-manager-all.yaml
+                        </code>
+                        で設定ファイルを開く。書き込み禁止ファイルなのでsudo権限必要<br>
+                        以下のように書き換える。<br>
+                        <code>
+                            network:
+                                version: 2
+                                renderer: NetworkManager
+                                ethernets:
+                                    enp3s0(ネットワークインターフェース):
+                                        dhcp4: no
+                                        addresses:
+                                            - IPアドレス
+                                        routes:
+                                            - to: 0.0.0.0/0
+                                                via: ゲートウェイ
+                                        nameservers:
+                                            addresses:
+                                                - DNS
+                        </code>
+                        ちょっと小難しいけど、要はネットワーク系アドレスを指定している。<br>
+                        それぞれの項目の確認の仕方は以下の通り。
+                        <code>
+                            ip a                     # ネットワークインターフェースの確認
+                            ip route                 # ゲートウェイの確認 default viaに続く箇所
+                            less /etc/resolv.conf    # DNSの確認 nameserverに続く箇所
+                        </code>
+                        書き換えたら保存して終了。<br>
+                        <code>
+                            sudo netplan apply
+                        </code>
+                        で設定を適用。<br>
+                        以下の警告が出力された
+                        <code>
+                            ** (generate:9439): WARNING **: 23:03:11.055: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+                            ** (process:9436): WARNING **: 23:03:11.235: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+                            ** (process:9436): WARNING **: 23:03:11.401: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+                            ** (process:9436): WARNING **: 23:03:11.401: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
+                        </code>
+                        セキュリティが甘いよ！ってことらしい。<br>
+                        <code>
+                            sudo chmod 600 /etc/netplan/01-network-manager-all.yaml
+                        </code>
+                        で書き込み権限を変更。<br>
+                        再度
+                        <code>
+                            sudo netplan apply
+                        </code>
+                        警告が消えたら成功。
+                    </p>
+                    
+                    <h3>ファイアウォールの設定</h3>
+                    <p>
+                        セキュリティ的な話<br>
+                        現段階では異なるネットワークからの接続はできないので不正アクセスの心配はほとんどなさそうだけど、今後のためにも念の為設定しておく。<br>
+                        公開するポートやネットワークを指定する<br>
+                        Ubuntuはデフォルトでufwというファイアウォールがインストールされているのでそれを使用する。<br>
+                        <code>
+                            sudo ufw enable　　# ufwを有効化
+                        </code>
+                        特定のポートだけを開放する。<br>
+                        Pアドレスが住所「家」であれば、ポートは外に出る・外から入る「扉（ドア）」に該当するイメージ。<br>
+                        ポート22を開放するのが一般的らしい
+                        <code>
+                            sudo ufw allow 22
+                        </code>
+                        (現時点でそんなに意味はないけど)特定のIPアドレスのみにポートを開放する<br>
+                        <code>
+                            sudo ufw allow proto tcp from IPアドレス to any port 22
+                        </code>
+                    </p>
+                    <h4>次回はいよいよリモート接続に挑戦</h4>
+                    <h4>参考記事</h4>
+						<p>
+							<a href="https://qiita.com/miyuki_samitani/items/5d3d4b74334e51c19d07" target="_blank">sshとOpenSSHの違いは？</a>
+                            <a href="https://zenn.dev/uchidaryo/books/ubuntu-2204-server-book/viewer/openssh" target="_blank">Ubuntu 22.04サーバー構築入門</a>
+                            <a href="https://www.cman.jp/network/term/ip/p3/" target="_blank">固定IPアドレスと動的IPアドレス</a>
+                            <a href="https://www.cman.jp/network/term/port/" target="_blank">用語集　「ポート(PORT)とは？」</a>
+							<br>chatGPT</p>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
