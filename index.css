@@ -19,6 +19,9 @@ aside ul {
   padding: 0;       /* 左の余白を削除 */
   margin: 0;        /* 上下の余白を削除 */
 }
+a:visited {
+  color: inherit; /* 親要素の色を継承 */
+}
 body {
 	margin: 0;
 	padding: 0;
@@ -116,6 +119,16 @@ ul li br + span {
 }
 .link ul li a:hover {
 	color: #007BFF; 
+}
+a {
+  text-decoration: none; /* 下線を削除 */
+  color: #333; /* リンク色を統一 */
+}
+a:hover {
+  color: #007BFF; /* マウスオーバー時の色 */
+}
+a:visited {
+  color: #333; /* 訪問済みリンクの色を統一 */
 }
 p {
 	font-size: 16px;
