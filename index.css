@@ -9,6 +9,11 @@ aside {
 	padding: 15px;
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
+.left-title {
+  font-size: 24px; /* 必要に応じて大きさを調整 */
+  font-weight: bold; /* 太字にしたい場合 */
+  margin-bottom: 10px; /* 下に余白を追加したい場合 */
+}
 aside ul {
   list-style: none; /* 箇条書きの「・」を削除 */
   padding: 0;       /* 左の余白を削除 */
