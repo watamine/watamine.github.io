@@ -1,0 +1,193 @@
+@charset "UTF-8";
+aside {
+	width: 250px;
+	position: fixed; 
+	top: 0;
+	left: 0;
+	height: 100%; 
+	background-color: #C3D5C7;
+	padding: 15px;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+.left-title {
+  font-size: 24px; /* 必要に応じて大きさを調整 */
+  font-weight: bold; /* 太字にしたい場合 */
+  margin-bottom: 10px; /* 下に余白を追加したい場合 */
+}
+aside ul {
+  list-style: none; /* 箇条書きの「・」を削除 */
+  padding: 0;       /* 左の余白を削除 */
+  margin: 0;        /* 上下の余白を削除 */
+}
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background-color: #f9f9f9; 
+	line-height: 1.5;
+}
+#content {
+	max-width: 750px; 
+	margin: 0 auto; 
+	padding: 30px;
+	background-color: #ffffff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+	border-radius: 8px;
+}
+.column-box {
+  background-color: #f9f9f9; /* ボックスの背景色 */
+  border: 1px solid #ddd; /* ボーダー */
+  border-radius: 8px; /* 角を丸くする */
+  padding: 20px; /* 内側の余白 */
+  margin: 20px 0; /* 上下の外側余白 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボックスに影を追加 */
+}
+
+.column-title {
+  font-size: 20px; /* タイトル文字サイズ */
+  font-weight: bold; /* 太字 */
+  margin-bottom: 10px; /* 下に余白 */
+  color: #333; /* タイトルのテキスト色 */
+}
+
+.column-content {
+  font-size: 16px; /* 記事本文の文字サイズ */
+  line-height: 1.6; /* 行間の調整 */
+  color: #555; /* 本文のテキスト色 */
+}
+img {
+	max-width: 80%; 
+	height: auto;   
+	display: block;  
+	margin: 0 auto;  
+}
+big {
+	max-width: 100%; 
+	height: auto;    
+	display: block; 
+	margin: 0 auto; 
+}
+code, pre {
+	font-size: 16px; 
+	font-family: Consolas, "Courier New", monospace;
+	background-color: #f5f5f5; 
+	color: #333;
+	padding: 10px; 
+	border-radius: 5px; 
+	display: block;
+	overflow-x: auto; 
+	line-height: 1.5; 
+}
+.spaced-br {
+	display: block; 
+	margin-bottom: 16px; 
+}
+.center-text {
+	text-align: center;
+	margin: 20px 0;
+}
+br {
+	display: block; 
+	margin-bottom: 24px; 
+}
+ul {
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+ul li {
+	margin-bottom: 15px;
+	line-height: 1.8;
+	font-size: 18px;
+}
+ul li br + span {
+	font-size: 16px;
+	color: #555;
+}
+.link ul {
+	list-style: none;
+	padding: 0;
+}
+.link ul li {
+	margin: 10px 0;
+}
+.link ul li a {
+	text-decoration: none;
+	color: #333;
+}
+.link ul li a:hover {
+	color: #007BFF; 
+}
+p {
+	font-size: 16px;
+	line-height: 1.6;
+}
+h3 {
+	font-size: 18px;
+	margin-top: 20px;
+}
+h2 {
+	font-size: 24px;
+	margin-top: 20px;
+}
+header h1 {
+	font-size: 28px;
+	margin: 20px 0;
+	text-align: center;
+}
+header p {
+	text-align: center;
+	font-size: 14px;
+	color: #666;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+/* --- スマホ向けスタイル --- */
+@media screen and (max-width: 480px) {
+  .wrapper {
+    /* 必要に応じて調整 */
+  }
+
+  main {
+    width: 100%; /* メインコンテンツは全幅 */
+  }
+
+  aside {
+    display: none; /* サイドバーを非表示に */
+    /* ハンバーガーメニューで表示/非表示を切り替える場合は、
+       JavaScriptと連携してクラスを付け外しし、
+       そのクラスに対して display: block; などを指定します */
+  }
+
+  /* ハンバーガーメニュー用のボタンスタイル (例) */
+  .menu-toggle {
+    display: block; /* スマホでは表示 */
+    position: fixed; /* または他の位置 */
+    top: 10px;
+    left: 10px;
+    /* ボタンの見た目を整えるスタイル */
+    padding: 10px;
+    background-color: #C3D5C7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 1000; /* 他の要素より手前に */
+  }
+
+  /* メニュー表示時のスタイル (例: JavaScriptで .is-open クラスをasideに追加) */
+  aside.is-open {
+    display: block;
+    position: fixed; /* または absolute */
+    top: 0;
+    left: 0;
+    width: 80%; /* 画面幅の80% */
+    height: 100vh; /* 画面の高さ */
+    background-color: #f0f0f0;
+    z-index: 999;
+    overflow-y: auto; /* コンテンツが多い場合にスクロール */
+    /* 必要に応じてアニメーションを追加 */
+  }
+}
+
