@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>リモート接続に挑戦してみる</title>
+        <meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰">
+        <meta name="description" content="Ubuntuで構築した自宅サーバーにリモートから接続してみます">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="index.css">
+    </head>
+    
+    <body>
+        <div id="outer">
+            <header>
+                <h1>自作pcでいろいろやった</h1>
+                <p>東北大学大学院生命科学研究科　渡邊峰</p>
+                <button class="menu-toggle">メニュー</button>
+            </header>    
+            
+            <aside>
+                <nav>
+                    <div class="left-title>
+                        <a href="index.html">
+                            トップページ
+                        </a>
+                        <br>
+                    </div>
+                    <ul>
+                        <li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
+                        <li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
+                        <li><a href="server_construction.html">サーバーを構築してみた</a></li>
+                        <li><a href="server_remote_connection.html">リモート接続に挑戦してみる</a></li>
+                        <li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
+                        <li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div id="content" >
+                <main>
+                    <div id="inner">
+                        <h1>自宅サーバーにリモートから接続する</h1>
+                        <p>
+                            前回Ubuntuマシンにサーバーを構築してみましたが、<br>
+                            サーバーといえばリモート接続なので(?)、違うネットワークから接続できるようにして、<br>
+                            ついでにSSHキーも設定してセキュリティも向上させてみます。
+                        </p>
+
+                        <h2>状況</h2>
+                        <p>
+                            あまり詳しい話はよくわかりませんが、前回のような方法で構築したサーバーは基本的に同一ネットワーク内からしか接続できないらしい。<br>
+                            イメージ的にサーバーといえばリモート接続な気がするので、挑戦してみる。<br>
+                            しかし、基本的にネットワーク云々の話になってくるので、WiFiルーターの設定や課金が必要になるらしい...<br>
+                            賃貸設置の無料WiFiなので、流石にいじくれないし別の回線を契約する気にはならない。<br>
+                        </p>
+
+                        <h3>ngrokというサービスを利用してみる</h3>
+                        <p>
+                            ngrokとは、ローカルPC上で稼働しているネットワーク（TCP）サービスを外部公開できるサービス
+                            (<a href="https://qiita.com/mininobu/items/b45dbc70faedf30f484e" target="_blank)">引用</a><br>
+                            マイクラのサーバー公開に使われることもあるらしい。<br>
+                            つまり、ngrokを使うことで、ローカルPC上で稼働しているサービスを外部からアクセスできるようにすることができる。(無料プランあり)<br>
+                        </p>
+
+                        <h4>ngrokのユーザー登録、インストール</h4>
+                        <p>
+                            まず、<a href="https://ngrok.com/resources" target="_blank">ngrok公式サイト</a>からユーザー登録を行う。<br>
+                            登録したらSetup & Instlattionから、OSに合わせたバイナリをインストールする
+                        </p>
+                        <code>
+                            wget ngrok-v3-stable-linux-amd64.tgz <br>
+                            tar xvzf ngrok-v3-stable-linux-amd64.tgz <br>
+                            mv ngrok /usr/local/bin/<br>
+                            ngrok version
+                        </code>
+                        <p>
+                            正常にインストールすることができた
+                        </p>
+                        <p>
+                            ここで、ngrok登録時に発行された認証トークンを取得する。
+                            Your Authtokenからトークンをコピーする
+                        </p>
+                        <code>
+                            ngrok config add-authtoken <コピーしたトークン>
+                        </code>
+                        
+                        <code>
+                            Authtoken saved to configuration file: /Users/.config/ngrok/ngrok.yml
+                        </code>
+                        <p>
+                            と出力されれば、ngrok.ymlにトークンが保存され、リモート接続のための準備が整ったはず
+                        </p>
+
+                        <code>
+                            ngrok tcp 22
+                        </code>
+                        <p>22万ポートを指定して、その接続のための情報が出力されるはず<br>
+                            と思ったら...
+                        </p>
+
+                        <code>
+                            ERROR: failed to start tunnel: You must add a credit card or debit card before you can use TCP endpoints on a free account.
+                        </code>
+                        <p>
+                            クレジットカードを登録しろとのこと。<br>
+                            公式ページに登録しに行く。<br>
+                            手持ちのJCBカード情報を入力してみたけれどなぜか登録できない。<br>
+                            おそらく、JCBカードで時々生じる、海外サービスで対応していない問題だと思われる
+                        </p>
+
+                        <h5>もう一枚新しいクレジットカードを作成する</h5>
+                        <p>
+                            MasterCardかVisaだったら問題ないはずとのことで、審査のゆるそうな適当なMasterCardを申し込み。<br>
+                            そこから審査とカードの到着を待つこと2週間...
+                        </p>
+                        <img src="/images/server/twoweekslater.png">
+
+                        <h4>参考記事</h4>
+                        <p>
+                            <a href="https://qiita.com/mininobu/items/b45dbc70faedf30f484e" target="_blank">ngrokが便利すぎる</a>
+                        </p>
+                    </div>
+                </main>
+            </div>
+        
+        
+        </body>
+
+        
+        
+        </html>
+
+
