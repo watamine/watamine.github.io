@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>タイトル</title>
+<meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, Windows11 Home, BIOS">
+<meta name="description" content="Ubuntu 22.04から24.04へアップデート">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="index.css">
+
+</head>
+<body>
+    <div id="outer">
+			<header>
+				<div id="header-container"><div id="head-inner">
+					<h1>自作pcでいろいろやった</h1>
+					<p class="description">東北大学大学院生命科学研究科　渡邊峰</p></div></div>
+			</header>
+			<aside>
+				<div class="left-title"><a href="index.html">トップページ</div>
+				<div class="link">
+					<ul>
+						<li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
+						<li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
+						<li><a href="#section3">サーバーを構築してみた</a></li>
+						<li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
+						<li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
+					</ul>
+				</div>
+			</aside>
+			<div id="content">
+                <main>
+                    <div id="inner">
+                        <h2>Ubuntuを22.04から24.04にアップデートする</h2>
+                        <p>以下のコマンドを実行する</p>
+                        <p>
+                            まず、パッケージの管理、アップデートを行う
+                        </p>
+                        <code>
+                            sudo apt update        # パッケージ情報を取得
+                            sudo apt dist-upgrade  # パッケージを更新
+                            sudo apt autoremove    # 不要パッケージを削除
+                        </code>
+                        <p>
+                            更新の準備をする
+                        </p>
+                        <code>
+                            sudo apt install update-manager
+                            cat /etc/update-manager/release-upgrades
+                        </code>
+                        <img src="images/ubuntu_install.png">
+                        <p>
+                            Ununtuアップグレードの設定を確認した。<br>
+                            Prompt=ltsとは、UbuntuのLTS版からLTSへのアップグレードを行うということ。<br>
+                            LTSとは通常版よりもサポート期間が長い安定バージョンのことで、22.04や24,04がそれにあたる<br>
+
+                        </p>
+                        <code>
+                            sudo do-release-upgrade
+                        </code>
+                        <p>
+                            アップグレーを実行するコマンド。<br>
+                            y/NやEnterの入力を求められるので、実行して待つだけ。<br>
+                            1時間以上かかった。
+                        </p>
+                        
+                        <h4>参考記事</h4>
+						<p>
+							<a href="https://qiita.com/masoo/items/8ebc51a6a9f32417d4a3" target="_blank">Ubuntu のアップデート方法</a>
+                            <a href="https://gihyo.jp/admin/serial/01/ubuntu-recipe/0671" target="_blank">パッケージのアップデートとアップグレードを制御する</a>
+							<br>chatGPT</p>
+                    </div>
+                </main>
+</body>
