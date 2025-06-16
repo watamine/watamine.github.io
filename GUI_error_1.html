@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>GUIエラーの対処</title>
-  <meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, 
-	  X window system, gdm3, GNOME, Xサーバー">
-  <meta name="description" content="Ubuntuを利用した状態から再起動したら画面が真っ暗のままになってしまいました．素人がChatGPTに聞きながらなんとか解決します．まずは基本的な再起動とディスプレイマネージャーを調べます">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="index.css">
-
-
-
-</head>
+	<head>
+		<meta charset="utf-8">
+		<title>GUIエラーの対処</title>
+		<meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, 
+		X window system, gdm3, GNOME, Xサーバー">
+		<meta name="description" content="Ubuntuを利用した状態から再起動したら画面が真っ暗のままになってしまいました。素人がChatGPTに聞きながらなんとか解決します．まずは基本的な再起動とディスプレイマネージャーを調べます">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="index.css">
+	</head>
+	
 	<body>
 		<div id="outer">
 			<header>
-				<div id="header-container"><div id="head-inner">
-					<h1>自作pcでいろいろやった</h1>
-					<p class="description">東北大学大学院生命科学研究科　渡邊峰</p></div></div>
-			</header>
+				<h1>Home</h1>
+				<p>東北大学大学院生命科学研究科　渡邊峰</p>
+				<button class="menu-toggle">メニュー</button>
+			</header>   
+			
 			<aside>
-				<div class="left-title"><a href="index.html">トップページ</div>
-				<div class="link">
+				<nav>
+					<div class="left-title">
+						<a href="index.html">
+							トップページ
+						</a>
+						<br>
+					</div>
 					<ul>
 						<li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
 						<li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
-						<li><a href="#section3">サーバーを構築してみた</a></li>
+						<li><a href="server_construction.html">サーバーを構築してみた</a></li>
+						<li><a href="server_remote_connection.html">リモート接続に挑戦してみる</a></li>
 						<li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
 						<li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
 					</ul>
-				</div>
+				</nav>
 			</aside>
+
 			<div id="content">
 				<main>
 					<div id="inner">
@@ -44,7 +50,7 @@
 							この問題を解決するべくとにかくいろいろ試しまくったのその記録です。
 							<br>遠回りをしていそうですが、ついでにGUIやシステム的なところについて色々知ることができたので、このまま残そうと思います。 
 						</P>
-
+	
 						<h2>考えられる原因</h2>
 						<p>
 							おそらくGUIがうまく起動していないor認識されていない 
@@ -71,7 +77,7 @@
 							これは、X Window Systemと呼ばれる (上図のXサーバーとデスクトップ環境のイメージ)GUIシステムを起動するためのコマンド 
 							<br>しかし直らず 
 						</p>
-
+	
 						<h2>ディスプレイマネージャーについて調べる</h2>
 						<h3>1. ディスプレイマネージャーがインストールされているかチェック</h3>
 						<P>
@@ -90,11 +96,11 @@
 						</code>
 						<p>
 							ii → "installed（インストール済み）" 
-						        <br>gdm3 → パッケージ名 
+								<br>gdm3 → パッケージ名 
 							<br>42.0-1ubuntu7 → バージョン 
 							<br>amd64 → アーキテクチャ（64bit） 
 							<br>GNOME Display Manager → 説明 
-
+	
 						</p>
 						<p>
 							Gdmはインストールされている
@@ -113,15 +119,15 @@
 							jounalctl -xeu gdm       # gdmに関するエラーログを確認 
 						</code>
 						<img src="images/GUI_trouble/gdm_log.jpg" class="big">
-
+	
 						<code>
 							GDM: Failed to contact accountsservice 
 						</code>
 						<p>
 							GDMがユーザー情報を取得できず起動に失敗している可能性がある 
 						</p>
-
-
+	
+	
 						<h3>accountsserviceという，liuxでユーザー管理をするパッケージをインストール </h3>
 						<code>
 							dpkg -l | grep accountsservice    
@@ -135,7 +141,7 @@
 							<br>sudo reboot 
 						</code>
 						<p>直らず</p>
-
+	
 						<h2>ここまでやったこと</h2>
 						<p>
 							システム再起動、X window system再起動
@@ -147,8 +153,11 @@
 							デスクトップ環境やXサーバーを含む、X window systemについて異常があるか確認する
 						</p>
 					</div>
+				</main>
 				
 			</div>
 		</div>
+		<script src="script.js"></script>
 	</body>
-</html>
+	</html>
+

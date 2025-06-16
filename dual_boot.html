@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>タイトル</title>
-  <meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, Windows11 Home, BIOS">
-  <meta name="description" content="自作pcをUnuntuとWindows11 Homeのデュアルブート仕様にします．ちゃんと起動時にOSを選択できるようにしました．">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="index.css">
+	<head>
+		<meta charset="utf-8">
+		<title>デュアルブートにしてみた 渡邊峰</title>
+		<meta name="keywords" content="自作pc, サーバー, 自作サーバー, デュアルブート, GUI, Ubuntu, Linux, 自宅サーバー, 渡邊峰, Windows11 Home, BIOS">
+		<meta name="description" content="自作pcをUnuntuとWindows11 Homeのデュアルブート仕様にします．ちゃんと起動時にOSを選択できるようにしました">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="index.css">
+	</head>
 
-
-</head>
 	<body>
 		<div id="outer">
 			<header>
-				<div id="header-container">
-					<div id="head-inner">
-						<h1>自作pcでいろいろやった</h1>
-						<p class="description">東北大学大学院生命科学研究科　渡邊峰</p></div></div>
-			</header>
+				<h1>Home</h1>
+				<p>東北大学大学院生命科学研究科　渡邊峰</p>
+				<button class="menu-toggle">メニュー</button>
+			</header>   
+			
 			<aside>
-				<div class="left-title"><a href="index.html">トップページ</div>
-				<div class="link">
+				<nav>
+					<div class="left-title">
+						<a href="index.html">
+							トップページ
+						</a>
+						<br>
+					</div>
 					<ul>
 						<li><a href="pc_enviroment.html">pcのスペックおよび作業環境</a></li>
 						<li><a href="dual_boot.html">デュアルブートにしてみた</a></li>
-						<li><a href="#section3">サーバーを構築してみた</a></li>
+						<li><a href="server_construction.html">サーバーを構築してみた</a></li>
+						<li><a href="server_remote_connection.html">リモート接続に挑戦してみる</a></li>
 						<li><a href="GUI_error_1.html">GUIエラーの対処 (前編)</a></li>
 						<li><a href="GUI_error_2.html">GUIエラーの対処 (後編)</a></li>
 					</ul>
-				</div>
+				</nav>
 			</aside>
+
 			<div id="content">
-				
+			
 				<main>
 					<div id="inner">
 						<h1>自作pcをデュアルブートにしてみる</h2>
@@ -163,7 +169,7 @@
 						<br>
 						<p>
 							これをこのように書き換える<
-									     /p>
+											/p>
 						<img src="images/Screenshot from 2025-04-19 02-21-25.png">
 						<code>
 							GRUB_DEFAULT=0 
@@ -223,5 +229,6 @@
 				</main>
 			</div>
 		</div>
+		<script src="script.js"></script>
 	</body>
 </html>
